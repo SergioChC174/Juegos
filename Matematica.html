@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+ <html lang="es">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matemáticas - Atrapa la Respuesta</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f4f8;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        #game-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 95%;
+            max-width: 700px;
+        }
+        h1 {
+            font-size: 2em;
+            color: #1a237e;
+            margin-bottom: 20px;
+            text-align: center;
+            user-select: none;
+        }
+        #game-container {
+            width: 100%;
+            height: 60vh;
+            min-height: 400px;
+            background-color: #ffffff;
+            border: 3px solid #6c5ce7;
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        #question {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #388e3c;
+            text-align: center;
+            padding: 12px 20px;
+            background-color: #e8f5e9;
+            border: 2px solid #388e3c;
+            border-radius: 10px;
+            width: 90%;
+            box-sizing: border-box;
+            user-select: none;
+        }
+        .answer {
+            position: absolute;
+            width: auto;
+            min-width: 120px;
+            height: 50px;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 25px;
+            padding: 0 20px;
+            font-size: 1.1em;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            font-weight: 500;
+            transition: transform 0.1s ease-out;
+            user-select: none;
+        }
+        .correct {
+            background-color: #4CAF50;
+        }
+        .incorrect {
+            background-color: #f44336;
+        }
+        #catcher {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 70px;
+            background-color: #2c3e50;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.4em;
+            border-radius: 15px;
+            transition: left 0.1s ease-in-out;
+            cursor: grab;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            user-select: none;
+        }
+        #score-board {
+            margin-top: 20px;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #2c3e50;
+            user-select: none;
+        }
+        #message-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ffffff;
+            border: 3px solid #6c5ce7;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+        #message-box h2 {
+            margin-top: 0;
+            color: #1a237e;
+            font-size: 2em;
+        }
+        #message-box p {
+            margin: 10px 0 20px;
+            font-size: 1.2em;
+            color: #555;
+        }
+        #message-box button {
+            padding: 12px 25px;
+            font-size: 1.1em;
+            background-color: #6c5ce7;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.1s;
+        }
+        #message-box button:hover {
+            background-color: #5c4eb5;
+            transform: translateY(-2px);
+        }
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.5em;
+            }
+            #question {
+                font-size: 1em;
+                padding: 10px;
+            }
+            .answer {
+                min-width: 90px;
+                height: 40px;
+                padding: 0 10px;
+                font-size: 1em;
+            }
+            #catcher {
+                width: 100px;
+                height: 50px;
+                font-size: 1em;
+            }
+            #score-board {
+                font-size: 1.4em;
+            }
+        }
+    </style>
+ </head>
+ <body>
+    <div id="game-wrapper">
+        <h1>Matemáticas - Atrapa la Respuesta</h1>
+        <div id="game-container">
+            <div id="question"></div>
+            <div id="catcher">Caja</div>
+        </div>
+        <div id="score-board">Puntuación: 0</div>
+    </div>
+    <div id="message-box">
+        <h2 id="message-title"></h2>
+        <p id="message-text"></p>
+        <button id="message-button">Jugar de Nuevo</button>
+    </div>
+    <script>
+        const questions = [
+            { q: '¿Cómo se le llama al conjunto que tienen la misma cantidad de elementos?', a: 
+'Conjuntos equivalentes' },
+            { q: 'Es un grupo o reunión de objetos que tienen algo en común. Para nombrarlos se utilizan letras mayúsculas.', a: 'Conjunto' },
+            { q: 'Se utiliza para escribir en orden los números.', a: 'Recta numérica' },
+            { q: '¿Cómo se le llama a un grupo de 10 unidades?', a: 'Decena' },
+            { q: '¿Cómo se le llama a un grupo de 100 unidades?', a: 'Centena' },
+            { q: 'Es el valor propio de un número, por su figura y la cantidad que representa.', a: 
+'Valor absoluto' },
+            { q: 'Es el valor que tiene un número según el lugar que ocupa en la cantidad,  unidades, decenas o centenas.', a: 'Valor relativo' },
+            { q: '¿Cómo se les llama a los números en las cuales indica orden?', a: 'Números ordinales' },
+            { q: '¿Cómo se le llama al sistema de numeración en la cual se utilizan letras?', a: 
+'Números Romanos' },
+            { q: 'Es una operación que indica cuántos elementos hay cuando se unen dos cantidades.', a: 'Adición' },
+            { q: 'Es una operación que indica cuando queda después de quitar una cantidad de otra.', a: 'Sustracción' },
+            { q: '¿Cómo se llama cuando agrupas de dos en dos y no sobra?', a: 'Números pares' },
+            { q: 'Es un número que se obtiene al dividir un entero en partes iguales.', a: 
+'Fracciones' },
+            { q: 'Es una forma abreviada de realizar una adición de sumandos iguales.', a: 
+'Multiplicación' },
+            { q: 'Es una operación que consiste en repartir en partes iguales una cantidad.', a: 
+'División' },
+            { q: 'Mide la estatura, el largo del pizarrón, la altura de la puerta del salón de clases o el ancho de la calle.', a: 'Medidas de longitud' },
+            { q: 'Establece la cantidad de materia que contiene un cuerpo.', a: 'Medidas de masa' },
+            { q: 'Parte de matemática que estudia la forma de los objetos.', a: 'Geometría' },
+            { q: 'Como el cuadrado y el rectángulo tienen 4 lados rectos.', a: 'Cuadrilátero' },
+            { q: 'No es un polígono, el contorno de la figura se llama circunferencia.', a: 'Círculo' }
+        ];
+        const gameContainer = document.getElementById('game-container');
+        const questionEl = document.getElementById('question');
+        const catcher = document.getElementById('catcher');
+        const scoreBoard = document.getElementById('score-board');
+        const messageBox = document.getElementById('message-box');
+        const messageTitle = document.getElementById('message-title');
+        const messageText = document.getElementById('message-text');
+        const messageButton = document.getElementById('message-button');
+        let score = 0;
+        let currentQuestionIndex = 0;
+        let answerSpeed = 1.5;
+        let gameActive = true;
+        let shuffledQuestions = [];
+        let catcherIsHeld = false;
+        let touchStartPos = 0;
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+        function createAnswerElement(text, isCorrect) {
+            const answerEl = document.createElement('div');
+            answerEl.classList.add('answer', isCorrect ? 'correct' : 'incorrect');
+            answerEl.textContent = text;
+            answerEl.style.left = `${Math.random() * (gameContainer.clientWidth - 150)}px`;
+            answerEl.style.top = `-50px`;
+            answerEl.dataset.isCorrect = isCorrect;
+            gameContainer.appendChild(answerEl);
+            return answerEl;
+        }
+        function dropAnswers(question) {
+            const answersToDrop = [];
+            answersToDrop.push({ text: question.a, isCorrect: true });
+            
+            const incorrectAnswers = questions
+                .filter(q => q.a !== question.a)
+                .map(q => q.a)
+                .sort(() => 0.5 - Math.random())
+                .slice(0, 2);
+            incorrectAnswers.forEach(text => {
+                answersToDrop.push({ text: text, isCorrect: false });
+            });
+            shuffle(answersToDrop).forEach(answer => {
+                createAnswerElement(answer.text, answer.isCorrect);
+            });
+        }
+        function nextQuestion() {
+            if (currentQuestionIndex >= shuffledQuestions.length) {
+                endGame(true);
+                return;
+            }
+            const currentQuestion = shuffledQuestions[currentQuestionIndex];
+            questionEl.textContent = currentQuestion.q;
+            currentQuestionIndex++;
+            dropAnswers(currentQuestion);
+        }
+        function checkCollision(answerEl) {
+            const catcherRect = catcher.getBoundingClientRect();
+            const answerRect = answerEl.getBoundingClientRect();
+            return (
+                answerRect.bottom >= catcherRect.top &&
+                answerRect.bottom <= catcherRect.bottom &&
+                answerRect.right >= catcherRect.left &&
+                answerRect.left <= catcherRect.right
+            );
+        }
+        function gameLoop() {
+            if (!gameActive) return;
+            const answers = document.querySelectorAll('.answer');
+            answers.forEach(answer => {
+                let top = parseFloat(answer.style.top);
+                answer.style.top = `${top + answerSpeed}px`;
+                if (checkCollision(answer)) {
+                    if (answer.dataset.isCorrect === 'true') {
+                        score++;
+                        scoreBoard.textContent = `Puntuación: ${score}`;
+                        answer.remove();
+                        // Remove all other answers on screen
+                        document.querySelectorAll('.answer').forEach(el => el.remove());
+                        nextQuestion();
+                    } else {
+                        endGame(false, '¡Oh no! Atrapaste la respuesta incorrecta.');
+                    }
+                } else if (top > gameContainer.clientHeight) {
+                    if (answer.dataset.isCorrect === 'true') {
+                        endGame(false, '¡Oh no! Dejaste caer la respuesta correcta.');
+                    }
+                    answer.remove();
+                }
+            });
+            requestAnimationFrame(gameLoop);
+        }
+        
+        function moveCatcher(clientX) {
+            let newLeft = clientX - gameContainer.getBoundingClientRect().left - 
+catcher.clientWidth / 2;
+            newLeft = Math.max(0, Math.min(newLeft, gameContainer.clientWidth - 
+catcher.clientWidth));
+            catcher.style.left = `${newLeft}px`;
+        }
+        // Mouse events for catcher
+        catcher.addEventListener('mousedown', (e) => {
+            catcherIsHeld = true;
+            moveCatcher(e.clientX);
+        });
+        document.addEventListener('mousemove', (e) => {
+            if (catcherIsHeld) {
+                moveCatcher(e.clientX);
+            }
+        });
+        document.addEventListener('mouseup', () => {
+            catcherIsHeld = false;
+        });
+        // Touch events for catcher
+        catcher.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            catcherIsHeld = true;
+            touchStartPos = e.touches[0].clientX - catcher.getBoundingClientRect().left;
+        });
+        document.addEventListener('touchmove', (e) => {
+            if (catcherIsHeld) {
+                e.preventDefault();
+                moveCatcher(e.touches[0].clientX);
+            }
+        });
+        
+        document.addEventListener('touchend', () => {
+            catcherIsHeld = false;
+        });
+        function endGame(isWin, message) {
+            gameActive = false;
+            messageBox.style.display = 'flex';
+            if (isWin) {
+                messageTitle.textContent = '¡Juego Terminado!';
+                messageText.textContent = `¡Felicidades! Completaste todas las preguntas. Tu 
+puntuación final es: ${score}.`;
+            } else {
+                messageTitle.textContent = '¡Fin del Juego!';
+                messageText.textContent = `${message} Tu puntuación final es: ${score}.`;
+            }
+        }
+        messageButton.addEventListener('click', () => {
+            messageBox.style.display = 'none';
+            resetGame();
+        });
+        function resetGame() {
+            score = 0;
+            currentQuestionIndex = 0;
+            scoreBoard.textContent = 'Puntuación: 0';
+            gameActive = true;
+            shuffledQuestions = shuffle([...questions]);
+            document.querySelectorAll('.answer').forEach(el => el.remove());
+            nextQuestion();
+            requestAnimationFrame(gameLoop);
+        }
+        // Start the game on window load
+        window.onload = resetGame;
+    </script>
+ </body>
+</html>
