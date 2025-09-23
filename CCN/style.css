@@ -1,0 +1,55 @@
+/* Oculta la barra de desplazamiento horizontal en dispositivos pequeños */
+body {
+    overflow-x: hidden;
+    font-family: 'Balsamiq Sans', sans-serif;
+}
+
+/* Estilos para el modal */
+#modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease-in-out forwards;
+}
+
+/* Animación de entrada para el modal */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Animación de pulso para la respuesta correcta */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+.animate-pulse {
+    animation: pulse 0.5s ease-in-out;
+}
+
+/* Animación de sacudida para la respuesta incorrecta */
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-5px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(5px);
+    }
+}
+.animate-shake {
+    animation: shake 0.5s ease-in-out;
+}
