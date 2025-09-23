@@ -1,25 +1,25 @@
 // Preguntas y respuestas del juego
 const questions = [
     { q: '¿Cómo se llama el alcalde de Cobán?', a: 'Felipe Pop' },
-    { q: '¿Cómo se llama el presidente de Guatemala?', a: 'Bernardo Arévalo' },
+    { q: '¿Cómo se llama el presidente de Guatemala?', a: ['Bernardo Arévalo', 'Bernardo Arevalo'] },
     { q: '¿En qué departamento se encuentra ubicada la ciudad de Cobán?', a: 'Alta Verapaz' },
-    { q: '¿Nos ayudan a saber la orientación de diferentes lugares en relación al lugar donde nos encontramos?', a: 'Puntos cardinales' },
+    { q: '¿Nos ayudan a saber la orientación de diferentes lugares en relación al lugar donde nos encontramos?', a: ['Puntos cardinales', "puntos cardinales"] },
     { q: '¿Cómo se llama tu municipio?', a: 'Cobán' },
-    { q: '¿Es un proceso que se activa cuando el organismo detecta algún peligro, amenaza o desequilibrio?', a: 'Emociones' },
-    { q: '¿Son como fotografías de una parte de la Tierra?', a: 'Mapas' },
+    { q: '¿Es un proceso que se activa cuando el organismo detecta algún peligro, amenaza o desequilibrio?', a: ['Emociones', 'emociones'] },
+    { q: '¿Son como fotografías de una parte de la Tierra?', a: ['Mapas', 'mapas'] },
     { q: '¿En cuántos departamentos está dividida Guatemala?', a: '22 departamentos' },
-    { q: '¿Son pequeños territorios de cada departamento?', a: 'Municipios' },
-    { q: '¿Es un grupo de personas que viven cerca unas de otras y sus autoridades municipales son las mismas?', a: 'Comunidades' },
-    { q: '¿Es la parte más antigua de una ciudad?', a: 'Centro Histórico' },
-    { q: '¿Cuántas comunidades étnicas existen en Guatemala?', a: '4 etnias' },
-    { q: 'Nombres de las 4 comunidades étnicas de Guatemala.', a: 'Maya, Xinca, Garífuna y Ladino' },
-    { q: '¿Para qué sirven los medios de comunicación?', a: 'Sirven para entretener, informar y comunicar a las personas.' },
-    { q: '¿Cuál es el nombre del ave nacional de Guatemala?', a: 'El Quetzal' },
-    { q: 'Son gráficos que informan acerca de acciones que se pueden hacer o que evitan accidentes ocasionados por los conductores.', a: 'Señales de tránsito' },
-    { q: 'Es un árbol frondoso de tronco grueso, representa la fuerza, la vida y la riqueza del suelo guatemalteco.', a: 'La ceiba' },
-    { q: 'Es una ciudad ubicada en el departamento de Petén, es la más representativa del pueblo maya.', a: 'Tikal' },
-    { q: 'Es considerado uno de los volcanes más emblemáticos del país, está activo, es decir mantiene constante erupción.', a: 'Volcán de Pacaya' },
-    { q: 'Son elevaciones de terreno cubiertas de vegetación.', a: 'Las montañas' }
+    { q: '¿Son pequeños territorios de cada departamento?', a: ['Municipios', 'municipios'] },
+    { q: '¿Es un grupo de personas que viven cerca unas de otras y sus autoridades municipales son las mismas?', a: ['Comunidades', 'comunidades'] },
+    { q: '¿Es la parte más antigua de una ciudad?', a: ['Centro Histórico', 'centro historico'] },
+    { q: '¿Cuántas comunidades étnicas existen en Guatemala?', a: ['4 etnias', 'cuatro etnias'] },
+    { q: 'Nombres de las 4 comunidades étnicas de Guatemala.', a: ['Maya, Xinca, Garífuna y Ladino', 'maya, xinca, garifuna y ladino'] },
+    { q: '¿Para qué sirven los medios de comunicación?', a: ['Sirven para entretener, informar y comunicar a las personas.', 'sirven para entretener, informar y comunicar a las personas', 'sirven para entretener, informar y comunicar', 'entretener, informar y comunicar'] },
+    { q: '¿Cuál es el nombre del ave nacional de Guatemala?', a: ['El Quetzal', 'el quetzal', 'quetzal'] },
+    { q: 'Son gráficos que informan acerca de acciones que se pueden hacer o que evitan accidentes ocasionados por los conductores.', a: ['Señales de tránsito', 'señales de transito', 'Señales de Transito'] },
+    { q: 'Es un árbol frondoso de tronco grueso, representa la fuerza, la vida y la riqueza del suelo guatemalteco.', a: ['La ceiba', 'Ceiba', 'ceiba'] },
+    { q: 'Es una ciudad ubicada en el departamento de Petén, es la más representativa del pueblo maya.', a: ['Tikal', 'tikal'] },
+    { q: 'Es considerado uno de los volcanes más emblemáticos del país, está activo, es decir mantiene constante erupción.', a: ['Volcán de Pacaya', 'volcan de pacaya', 'volcám de pacaya'] },
+    { q: 'Son elevaciones de terreno cubiertas de vegetación.', a: ['Las montañas', 'montañas', 'Montañas', 'las montañas'] },
 ];
 
 // Elementos del DOM
@@ -106,10 +106,19 @@ function resetGame() {
 function handleSubmit() {
     const userAnswer = answerInput.value.trim().toLowerCase();
     const currentQuestion = shuffledQuestions[currentQuestionIndex];
-    const correctAnswer = currentQuestion.a.trim().toLowerCase();
-    let feedbackTitle = '';
+    let isCorrect = false;
+    let correctAnswerDisplay = '';
 
-    if (userAnswer === correctAnswer) {
+    if (Array.isArray(currentQuestion.a)) {
+        isCorrect = currentQuestion.a.some(ans => userAnswer === ans.trim().toLowerCase());
+        correctAnswerDisplay = currentQuestion.a[0]; // Mostrar solo la primera respuesta
+    } else {
+        isCorrect = userAnswer === currentQuestion.a.trim().toLowerCase();
+        correctAnswerDisplay = currentQuestion.a;
+    }
+
+    let feedbackTitle = '';
+    if (isCorrect) {
         score++;
         feedbackTitle = '¡Súper bien! ¡Respuesta correcta! 😊';
     } else {
@@ -118,7 +127,7 @@ function handleSubmit() {
     }
 
     scoreDisplay.textContent = `Puntuación: ${score}`;
-    showMessageBox(feedbackTitle, '', currentQuestion.a);
+    showMessageBox(feedbackTitle, '', correctAnswerDisplay);
     
     currentQuestionIndex++;
 }
