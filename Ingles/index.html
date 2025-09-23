@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Show</title>
+    <link rel="icon" href="/images/Games-Folder-removebg-preview.png" type="image/png">
+    <!-- Tailwind CSS CDN -->
+     
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fuente personalizada -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen p-4">
+
+    <!-- Main Quiz Container -->
+    <div id="quiz-container" class="w-full max-w-xl bg-white p-8 rounded-3xl shadow-2xl text-center border-4 border-indigo-500 transform transition-all duration-300">
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-indigo-800 mb-6 tracking-wide drop-shadow-lg">Español a Inglés - Quiz Show</h1>
+        <div id="question-box" class="min-h-[8rem] flex flex-col items-center justify-center p-4 bg-indigo-100 rounded-2xl mb-4 border-2 border-indigo-300 text-xl sm:text-2xl font-bold text-indigo-900 transition-all duration-300">
+            Cargando pregunta...
+        </div>
+        
+        <!-- Multiple Choice Options Container -->
+        <div id="options-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
+            <!-- Options will be dynamically generated here -->
+        </div>
+
+        <div id="score-box" class="mt-8 text-xl font-bold text-indigo-700">Puntuación: 0</div>
+    </div>
+    
+    <!-- Custom Modal for Messages -->
+    <div id="message-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 z-50 hidden flex items-center justify-center transition-opacity duration-300 opacity-0">
+        <div class="bg-white p-8 rounded-xl shadow-2xl text-center max-w-sm w-full">
+            <h2 id="modal-message" class="text-2xl font-bold text-indigo-700 mb-4"></h2>
+            <button onclick="closeModal()" class="px-6 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="app.js"></script>
+</body>
+</html>

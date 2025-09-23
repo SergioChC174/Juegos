@@ -1,0 +1,125 @@
+/* Fuente divertida para niños */
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
+
+body {
+    font-family: 'Comic Neue', sans-serif;
+    background: linear-gradient(to bottom right, #ffecd2, #fcb69f); /* colores cálidos y atractivos */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* Contenedor principal */
+#quiz-container {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 2rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    text-align: center;
+    border: 6px solid #ff7f50; /* borde llamativo */
+    max-width: 450px;
+    width: 100%;
+    animation: fadeIn 0.8s ease-out;
+}
+
+/* Título */
+#quiz-container h1 {
+    color: #ff4500;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Caja de pregunta */
+#question-box {
+    background-color: #fffae3;
+    border: 3px solid #ffd700;
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    min-height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+/* Botones de opciones */
+#options-container button {
+    background-color: #ffb347;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 0.8rem 1.2rem;
+    border-radius: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+#options-container button:hover {
+    background-color: #ff7f50;
+    transform: scale(1.05);
+}
+
+/* Botón de reinicio */
+#quiz-container button.reset-btn {
+    background-color: #ff6347;
+    margin-top: 1rem;
+}
+
+#quiz-container button.reset-btn:hover {
+    background-color: #ff4500;
+}
+
+/* Modal */
+#message-modal {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0,0,0,0.6);
+    display: none; /* <-- empieza oculto */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    pointer-events: none; /* no bloquea clics cuando invisible */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+#message-modal.active {
+    display: flex;
+    pointer-events: auto; /* habilita clics solo cuando está visible */
+    opacity: 1;
+}
+
+#message-modal div {
+    background-color: #fff8dc;
+    padding: 2rem;
+    border-radius: 1.5rem;
+    border: 4px solid #ffb347;
+    text-align: center;
+    max-width: 300px;
+    width: 90%;
+    animation: popIn 0.3s ease;
+}
+
+#message-modal h2 {
+    color: #ff4500;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+@keyframes popIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px);}
+    to { opacity: 1; transform: translateY(0);}
+}
