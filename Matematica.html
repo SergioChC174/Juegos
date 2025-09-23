@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matemáticas - Atrapa la Respuesta</title>
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text y='50%' x='50%' text-anchor='middle' dominant-baseline='central' font-size='48'>🧮</text></svg>">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
         body {
@@ -157,6 +159,14 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             transition: background-color 0.3s, transform 0.1s;
         }
+        .button {
+            padding: 9px 20px;
+            font-size: 1.1em;
+            color: rgb(0, 0, 0);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer; 
+        }
 
         #message-box button:hover {
             background-color: #5c4eb5;
@@ -201,6 +211,7 @@
         <div id="catcher">Caja</div>
     </div>
     <div id="score-board">Puntuación: 0</div>
+    <button class="button" onclick="window.location.href='index.html'">Regresar a Inicio</button>
 </div>
 
 <div id="message-box">
