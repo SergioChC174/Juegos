@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Aventura de Preguntas!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gradient-to-br from-yellow-300 via-pink-300 to-purple-400 flex flex-col items-center justify-center min-h-screen p-4">
+
+    <!-- Main Game Container -->
+    <div class="main-container w-full max-w-2xl p-6 bg-white rounded-3xl shadow-2xl space-y-6">
+        
+        <!-- Heading with decorative elements -->
+        <div class="relative text-center">
+            <h1 class="text-3xl sm:text-4xl font-bold font-fredoka text-red-600">
+                🚀 Aventura de Preguntas 🚀
+            </h1>
+            <p class="text-lg font-bold text-gray-700 font-fredoka">
+                ¡Aprende sobre Guatemala jugando!
+            </p>
+        </div>
+        
+        <!-- Score and Progress Display -->
+        <div class="flex justify-between items-center text-lg font-bold text-blue-800 bg-blue-200 rounded-full py-2 px-6 shadow-md">
+            <span id="score-display">Puntuación: 0</span>
+            <span id="progress-display">Pregunta 1 / 20</span>
+        </div>
+
+        <!-- Question Display Card -->
+        <div id="question-card" class="question-card bg-purple-200 p-6 rounded-3xl shadow-xl min-h-[150px] flex items-center justify-center text-center">
+            <p id="question-text" class="text-xl sm:text-2xl font-bold font-fredoka text-purple-800">
+                <!-- La pregunta se mostrará aquí -->
+            </p>
+        </div>
+
+        <!-- Answer Input and Submit Button -->
+        <div class="space-y-4">
+            <input type="text" id="answer-input" placeholder="¡Escribe tu respuesta aquí!" class="w-full p-4 border-4 border-green-500 rounded-full focus:outline-none focus:ring-4 focus:ring-green-700 transition duration-200 font-fredoka text-green-800 placeholder-green-500 shadow-md">
+            <button id="submit-button" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 font-fredoka text-2xl">
+                ¡Responder! 🎉
+            </button>
+        </div>
+        
+    </div>
+
+    <!-- Custom Message Box -->
+    <div id="message-box" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden items-center justify-center p-4 z-50 transition-opacity duration-300">
+        <div class="message-content bg-white p-8 rounded-3xl shadow-2xl text-center space-y-4 max-w-sm w-full transform scale-95 transition-transform duration-300 border-4 border-blue-400">
+            <p id="message-text" class="text-3xl font-bold font-fredoka"></p>
+            <p id="correct-answer-text" class="text-lg text-gray-600 font-fredoka"></p>
+            <button id="close-message" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105 font-fredoka">
+                ¡Siguiente! ✨
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
