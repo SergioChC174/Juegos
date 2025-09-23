@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Matemáticas - Unir con una línea</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">M</div>
+            <div>
+                <h1>Matemáticas — Unir con una línea</h1>
+                <p>Toca una pregunta, luego la respuesta correcta. 20 parejas.</p>
+            </div>
+        </header>
+        <main>
+            <div class="board-container">
+                <canvas id="lineCanvas"></canvas>
+                <div id="board">
+                    <div class="col left-col">
+                        <div class="col-header">
+                            <strong>Preguntas</strong>
+                            <small>Toca primero aquí</small>
+                        </div>
+                        <div id="leftList"></div>
+                    </div>
+                    <div class="col right-col">
+                        <div class="col-header">
+                            <strong>Respuestas</strong>
+                            <small>Luego toca la respuesta</small>
+                        </div>
+                        <div id="rightList"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="controls">
+                <button id="resetBtn" class="btn primary">Reiniciar juego</button>
+                <button id="revealBtn" class="btn secondary">Mostrar respuestas</button>
+                <div id="scoreBox">Acertadas: 0 / 20</div>
+            </div>
+        </main>
+    </div>
+    
+    <div id="modalContainer">
+        <div id="modalContent">
+            <h2 id="modalText"></h2>
+            <div class="modal-buttons">
+                <button id="modalConfirmBtn" class="btn primary">Si</button>
+                <button id="modalCancelBtn" class="btn secondary">No</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
