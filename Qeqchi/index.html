@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adivina la Respuesta</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-purple-50 min-h-screen flex flex-col items-center p-4">
+
+    <h1 class="text-4xl sm:text-5xl font-bold text-purple-900 mt-4 mb-8 text-center">Adivina la Respuesta</h1>
+    
+    <div class="mb-6 text-xl font-bold text-gray-700">
+        Puntuación: <span id="score-display">0</span>
+    </div>
+
+    <div id="game-container" class="w-full max-w-7xl flex flex-col sm:flex-row gap-4 p-4 md:p-6 bg-white rounded-2xl shadow-lg border-2 border-purple-200">
+        <div class="flex-1">
+            <h2 class="text-2xl font-bold text-gray-700 text-center mb-4">ESPAÑOL</h2>
+            <div id="espanol-column" class="flex flex-col gap-3"></div>
+        </div>
+        <div class="flex-1">
+            <h2 class="text-2xl font-bold text-gray-700 text-center mb-4">Q'EQCHI'</h2>
+            <div id="qeqchi-column" class="flex flex-col gap-3"></div>
+        </div>
+    </div>
+
+    <div id="message-container" class="mt-8 flex flex-col items-center">
+        <div id="message" class="text-2xl font-semibold text-purple-700 h-8 text-center"></div>
+        <button id="restart-button" class="mt-4 px-6 py-3 bg-purple-600 text-white font-bold rounded-full shadow-lg hover:bg-purple-700 transition-colors duration-300">Reiniciar Juego</button>
+    </div>
+    
+
+    <script src="script.js"></script>
+</body>
+</html>
